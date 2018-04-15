@@ -108,14 +108,14 @@ class SSSListener implements Listener{
 								public function __construct(SignServerStats $plugin, Player $player, string $ip, int $port, int $id){
 									parent::__construct($plugin);
 									$this->player = $player;
-									$this->server = $main;
+									$this->main = $main->getServer();
 									$this->ip = $ip;
 									$this->port = $port;
 									$this->id = $id;
 								}
 	
 								public function onRun(int $currentTick){
-									$this->server->broadcast("§a$this->player §bhas transferred to: §dIP: §c$this->ip §dPort: §c$this->port");
+									$this->main->broadcast("§a$this->player §bhas transferred to: §dIP: §c$this->ip §dPort: §c$this->port");
 									$this->player->transfer($this->ip, $this->port, "SSStransfer/".implode("@", [$this->id, $this->ip, $this->port]));
 								}
 							},
