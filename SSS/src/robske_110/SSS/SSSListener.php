@@ -84,8 +84,6 @@ class SSSListener implements Listener{
 		if($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK){
 			$block = $event->getBlock();
 			$player = $event->getPlayer();
-			$ip = $this->ip;
-			$port = $this->port;
 			$signTile = $player->getLevel()->getTile($block);
 			if($signTile instanceof Sign){
 				$levelName = $block->getLevel()->getFolderName();
@@ -94,7 +92,6 @@ class SSSListener implements Listener{
 					if($player->hasPermission("SSS.servertransfer")){
 						$address = $this->main->getSignList()[$id][1];
 						if(!$this->main->getServerOnline()[$address[0]."@".$address[1]]){
-						    $this->plugin->getServer()->broadcastMesaage("§a$player §bhas transferred to: §dIP: §c$ip §dPort: §c$port");
 							return;
 						}
 						$this->main->getServer()->getScheduler()->scheduleDelayedTask(
@@ -111,12 +108,14 @@ class SSSListener implements Listener{
 								public function __construct(SignServerStats $plugin, Player $player, string $ip, int $port, int $id){
 									parent::__construct($plugin);
 									$this->player = $player;
+									$this->plugin = $plugin;
 									$this->ip = $ip;
 									$this->port = $port;
 									$this->id = $id;
 								}
 	
 								public function onRun(int $currentTick){
+									$this->plugin->getServer()->broadcastMesaage("§a$this->player §bhas transferred to: §dIP: §c$this->ip §dPort: §c$this->port");
 									$this->player->transfer($this->ip, $this->port, "SSStransfer/".implode("@", [$this->id, $this->ip, $this->port]));
 								}
 							},
