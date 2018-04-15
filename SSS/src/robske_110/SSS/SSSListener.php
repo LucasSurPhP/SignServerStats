@@ -108,7 +108,7 @@ class SSSListener implements Listener{
 								public function __construct(SignServerStats $plugin, Player $player, string $ip, int $port, int $id){
 									parent::__construct($plugin);
 									$this->player = $player;
-									$this->server = $server;
+									$this->server = $main;
 									$this->ip = $ip;
 									$this->port = $port;
 									$this->id = $id;
