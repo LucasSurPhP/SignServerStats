@@ -84,6 +84,8 @@ class SSSListener implements Listener{
 		if($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK){
 			$block = $event->getBlock();
 			$player = $event->getPlayer();
+			$ip = $this->ip;
+			$port = $this->port;
 			$signTile = $player->getLevel()->getTile($block);
 			if($signTile instanceof Sign){
 				$levelName = $block->getLevel()->getFolderName();
@@ -92,6 +94,7 @@ class SSSListener implements Listener{
 					if($player->hasPermission("SSS.servertransfer")){
 						$address = $this->main->getSignList()[$id][1];
 						if(!$this->main->getServerOnline()[$address[0]."@".$address[1]]){
+						    $this->plugin->getServer()->broadcastMesaage("§a$player §bhas transferred to: §dIP: §c$ip §dPort: §c$port");
 							return;
 						}
 						$this->main->getServer()->getScheduler()->scheduleDelayedTask(
